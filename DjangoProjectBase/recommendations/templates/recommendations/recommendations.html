@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Movie Recommendations</h2>
+
+    <form action="" method="get">
+        <div class="mb-3">
+            <label for="prompt" class="form-label">Enter your recommendation prompt:</label>
+            <input type="text" class="form-control" name="prompt" value="{{ prompt }}" placeholder="Example: Película de la segunda guerra mundial">
+        </div>
+        <button type="submit" class="btn btn-primary">Recommend</button>
+    </form>
+
+    {% if prompt %}
+        <p class="mt-3"><strong>Prompt entered:</strong> {{ prompt }}</p>
+    {% endif %}
+
+    {% if recommended_movie %}
+        <div class="row row-cols-1 row-cols-md-1 g-4 mt-3">
+            <div class="col">
+                <div class="card">
+                    <img src="{{ recommended_movie.image.url }}" class="card-img-top" alt="{{ recommended_movie.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ recommended_movie.title }}</h5>
+                        <p class="card-text">{{ recommended_movie.description }}</p>
+                        <p class="card-text"><strong>Genre:</strong> {{ recommended_movie.genre }}</p>
+                        <p class="card-text"><strong>Year:</strong> {{ recommended_movie.year }}</p>
+                        {% if recommended_movie.url %}
+                            <a href="{{ recommended_movie.url }}" class="btn btn-primary">Movie Link</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elif prompt %}
+        <p class="mt-3">No recommendation was found.</p>
+    {% endif %}
+</div>
+
+{% endblock content %}
